@@ -11,541 +11,381 @@
   <title>Registro de Asistencia</title>
   <script type="module" src="https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mjs"></script>
   <style>
-    :root {
-      --primary-color: #d32f2f;
-      --primary-color-dark: #b71c1c;
-      --background-gradient: linear-gradient(to bottom, rgba(0,0,0,0.9), var(--primary-color-dark), rgba(0,0,0,0.9));
-      --btn-hover-bg: #000000;
-      --btn-radius: 6px;
-      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(204, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+    url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Escudo_de_la_Universidad_Libre_de_Colombia.svg/2048px-Escudo_de_la_Universidad_Libre_de_Colombia.svg.png")
+    no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+.container, #login-form {
+  margin: 60px auto;
+  padding: 30px;
+  background: #ffffffee;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  color: #222;
+}
 
-    body {
-      font-family: var(--font-family);
-      text-align: center;
-      background:
-        var(--background-gradient),
-        url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Escudo_de_la_Universidad_Libre_de_Colombia.svg/2048px-Escudo_de_la_Universidad_Libre_de_Colombia.svg.png")
-        no-repeat center center fixed;
-      background-size: contain;
-      color: #fff;
-      margin: 0;
-      padding: 0 10px 40px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-    }
+h2, h3 {
+  color: #c62828;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
 
-    .container, #login-form {
-      margin: 40px auto;
-      padding: 25px 25px 30px;
-      background: #fff;
-      width: 100%;
-      max-width: 550px;
-      border-radius: 10px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      color: #000;
-      transition: transform 0.3s ease;
-    }
-    .container:focus-within, #login-form:focus-within {
-      transform: scale(1.02);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-    }
+button {
+  margin-top: 20px;
+  padding: 14px 28px;
+  border: none;
+  background: #c62828;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-    h2, h3 {
-      color: var(--primary-color-dark);
-      margin-bottom: 10px;
-      font-weight: 700;
-      user-select: none;
-    }
+button:hover {
+  background: #000000;
+  transform: scale(1.05);
+}
 
-    input, select {
-      width: 90%;
-      max-width: 480px;
-      padding: 12px 14px;
-      margin-top: 15px;
-      border-radius: 8px;
-      border: 1.5px solid #ccc;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: border-color 0.25s;
-      outline-offset: 2px;
-    }
-    input:focus, select:focus {
-      border-color: var(--primary-color);
-      outline: none;
-    }
+input, select {
+  width: 95%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
 
-    button {
-      margin-top: 20px;
-      padding: 15px 25px;
-      border: none;
-      background: var(--primary-color);
-      color: white;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: var(--btn-radius);
-      transition: background 0.35s, transform 0.25s;
-      box-shadow: 0 4px 8px rgba(211, 47, 47, 0.5);
-      user-select: none;
-    }
-    button:hover,
-    button:focus-visible {
-      background: var(--btn-hover-bg);
-      transform: scale(1.06);
-      outline-offset: 3px;
-      outline: 2px solid var(--primary-color);
-    }
-    button:active {
-      transform: scale(0.98);
-      transition-duration: 0.1s;
-    }
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 340px;
+  height: 240px;
+  margin: 25px auto;
+  background: black;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
 
-    .video-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 320px;
-      height: 240px;
-      margin: 20px auto;
-      background: black;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.7);
-    }
+#video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
 
-    #video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scaleX(-1);
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  background: #f9f9f9;
+  color: #333;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 25px;
-      background: white;
-      color: black;
-      border-radius: 5px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-      font-size: 0.9rem;
-      user-select: none;
-    }
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 12px 10px;
-      text-align: center;
-    }
+th {
+  background: #c62828;
+  color: white;
+}
 
-    th {
-      background: var(--primary-color);
-      color: white;
-      font-weight: 700;
-    }
+.admin-container {
+  display: none;
+}
 
-    .admin-container {
-      margin-top: 30px;
-      display: none;
-    }
+#loader {
+  font-weight: bold;
+  margin-top: 20px;
+  color: #2e7d32;
+  display: none;
+}
 
-    #loader {
-      font-weight: 700;
-      margin-top: 15px;
-      color: green;
-      display: none;
-      user-select: none;
-    }
+.flash {
+  animation: flash 0.3s ease-in-out;
+}
 
-    .flash {
-      animation: flash 0.3s ease-in-out;
-    }
+@keyframes flash {
+  0% { background-color: #c62828; }
+  100% { background-color: #000; }
+}
 
-    @keyframes flash {
-      0% { background-color: var(--primary-color); }
-      100% { background-color: #000; }
-    }
+.delete-btn {
+  background-color: #e53935;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
-    .delete-btn {
-      background-color: #e53935;
-      border: none;
-      color: white;
-      padding: 7px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      font-weight: 600;
-    }
-    .delete-btn:hover, .delete-btn:focus-visible {
-      background-color: var(--primary-color-dark);
-      outline-offset: 2px;
-      outline: 2px solid var(--primary-color);
-    }
-
-    /* Diseño responsivo */
-    @media (max-width: 600px) {
-      .video-container {
-        width: 100%;
-        height: 200px;
-      }
-
-      input, select, button {
-        width: 100%;
-        max-width: 100%;
-      }
-    }
-
-    /* Accesibilidad */
-    #mensaje, #feedback {
-      min-height: 24px;
-      font-weight: 600;
-      margin-top: 12px;
-      user-select: text;
-    }
+.delete-btn:hover {
+  background-color: #b71c1c;
+}
 
   </style>
 </head>
 <body>
-  <main role="main" aria-label="Formulario de registro e inicio de sesión">
-    <section id="login-form" aria-live="polite" aria-atomic="true">
-      <h2>🎓 Registro de Asistencia</h2>
-      <input type="text" id="username" placeholder="Usuario" aria-label="Nombre de usuario" autocomplete="username" />
-      <input type="password" id="password" placeholder="Contraseña" aria-label="Contraseña" autocomplete="current-password" />
-      <select id="role-select" aria-label="Seleccionar rol de usuario">
-        <option value="Usuario">Docente</option>
-        <option value="admin">Administrador</option>
-      </select>
-      <button id="login-button" aria-describedby="feedback">🔓 Iniciar sesión</button>
-      <button id="register-button" aria-describedby="feedback">📝 Registrarse</button>
-      <button id="voice-login" aria-describedby="feedback">🎤 Iniciar con voz</button>
-      <button id="voice-register" aria-describedby="feedback">🎤 Registrar con voz</button>
-      <p id="mensaje" role="alert" aria-live="assertive"></p>
-      <p id="feedback" role="alert" aria-live="polite"></p>
-    </section>
+  <div id="login-form">
+    <h2>🎓 Registro de Asistencia</h2>
+    <input type="text" id="username" placeholder="Usuario" />
+    <input type="password" id="password" placeholder="Contraseña" />
+    <select id="role-select">
+      <option value="Usuario">Docente</option>
+      <option value="admin">Administrador</option>
+    </select>
+    <button id="login-button">🔓 Iniciar sesión</button>
+    <button id="register-button">📝 Registrarse</button>
+    <button id="voice-login">🎤 Iniciar con voz</button>
+    <button id="voice-register">🎤 Registrar con voz</button>
+    <p id="mensaje"></p>
+    <p id="feedback"></p>
+  </div>
 
-    <section class="container" style="display:none;" aria-live="polite" aria-atomic="true" aria-label="Panel de usuario con cámara y registro de asistencia">
-      <h2 tabindex="0">Bienvenido</h2>
-      <div class="video-container" aria-label="Vista previa de cámara">
-        <video id="video" autoplay muted playsinline aria-live="off" aria-busy="false"></video>
-      </div>
-      <button id="capture" aria-describedby="feedback">✅ Registrar Asistencia</button>
-      <p id="loader" aria-live="polite" aria-atomic="true">Registrando asistencia...</p>
-      <button id="logout-button">⏏️ Cerrar sesión</button>
+  <div class="container" style="display:none;">
+    <h2>Bienvenido</h2>
+    <div class="video-container"><video id="video" autoplay></video></div>
+    <button id="capture">✅ Registrar Asistencia</button>
+    <p id="loader">Registrando asistencia...</p>
+    <button id="logout-button">⏏️ Cerrar sesión</button>
 
-      <h3>📊 Asistencia registrada</h3>
-      <table id="attendance-table" role="table" aria-label="Tabla de asistencia registrada">
-        <thead><tr><th scope="col">Usuario</th><th scope="col">Fecha</th><th scope="col">Hora</th></tr></thead>
+    <h3>📊 Asistencia registrada</h3>
+    <table id="attendance-table">
+      <thead><tr><th>Usuario</th><th>Fecha</th><th>Hora</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <div id="admin-panel" class="admin-container">
+      <h3>🛠 Panel de Administrador</h3>
+      <button id="download-excel">📥 Descargar Excel</button>
+      <table id="admin-attendance">
+        <thead><tr><th>Usuario</th><th>Rol</th><th>Fecha</th><th>Hora</th><th>Acción</th></tr></thead>
         <tbody></tbody>
       </table>
+    </div>
+  </div>
 
-      <div id="admin-panel" class="admin-container" aria-label="Panel de administrador con control de asistencias">
-        <h3>🛠 Panel de Administrador</h3>
-        <button id="download-excel" aria-describedby="feedback">📥 Descargar Excel</button>
-        <table id="admin-attendance" role="table" aria-label="Tabla detallada de asistencias administradas">
-          <thead><tr><th scope="col">Usuario</th><th scope="col">Rol</th><th scope="col">Fecha</th><th scope="col">Hora</th><th scope="col">Acción</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+    import * as XLSX from "https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mjs";
 
-    <section class="container" id="design-thinking-info" style="display:none;" aria-label="Información sobre la metodología Design Thinking aplicada">
-      <h2>💡 Metodología Design Thinking Aplicada</h2>
-      <ol style="text-align:left;">
-        <li><strong>Empatizar:</strong> Observación y entrevistas a docentes y estudiantes para entender los problemas del control de asistencia manual.</li>
-        <li><strong>Definir:</strong> Se identificó la necesidad de un sistema moderno y automatizado, sin contacto físico.</li>
-        <li><strong>Idear:</strong> Se exploraron múltiples soluciones, optando por el reconocimiento facial por su seguridad y eficacia.</li>
-        <li><strong>Prototipar:</strong> Se diseñó una interfaz funcional en Figma, con navegación clara e intuitiva.</li>
-        <li><strong>Evaluar:</strong> Pruebas reales permitieron ajustar la experiencia del usuario según su retroalimentación.</li>
-      </ol>
-      <p>🔗 Este sistema integra principios de innovación, accesibilidad, eficiencia energética y seguridad en ingeniería.</p>
-    </section>
-  </main>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Accesos rápidos
-  const $ = id => document.getElementById(id);
-
-  // Elementos UI
-  const mensaje = $("mensaje");
-  const feedback = $("feedback");
-  const loginForm = $("login-form");
-  const container = document.querySelector(".container");
-  const adminPanel = $("admin-panel");
-  const video = $("video");
-  const captureBtn = $("capture");
-  const logoutBtn = $("logout-button");
-  const attendanceTable = $("attendance-table").querySelector("tbody");
-  const adminAttendanceTable = $("admin-attendance").querySelector("tbody");
-  const downloadExcelBtn = $("download-excel");
-
-  // Estado global
-  let currentUser = null;
-  let userRole = null;
-  let attendanceData = [];
-
-  // Funciones auxiliares
-  function showError(msg) {
-    mensaje.textContent = msg;
-    mensaje.style.color = "red";
-    setTimeout(() => { mensaje.textContent = ""; }, 4000);
-  }
-
-  function showSuccess(msg) {
-    mensaje.textContent = msg;
-    mensaje.style.color = "green";
-    setTimeout(() => { mensaje.textContent = ""; }, 4000);
-  }
-
-  function saveUsers(users) {
-    localStorage.setItem("users", JSON.stringify(users));
-  }
-
-  function getUsers() {
-    return JSON.parse(localStorage.getItem("users")) || {};
-  }
-
-  // Login
-  function login(user, pass) {
-    const users = getUsers();
-    if (users[user]?.password === pass) {
-      currentUser = user;
-      userRole = users[user].role;
-      loginForm.style.display = "none";
-      container.style.display = "block";
-      adminPanel.style.display = userRole === "admin" ? "block" : "none";
-      startCamera();
-      cargarAsistencia();
-      mensaje.textContent = "";
-    } else {
-      showError("Credenciales incorrectas");
-    }
-  }
-
-  // Registro
-  function register(user, pass, role) {
-    if (!user || !pass) return showError("Usuario y contraseña requeridos");
-    const users = getUsers();
-    if (users[user]) return showError("Usuario ya existe");
-    users[user] = { password: pass, role };
-    saveUsers(users);
-    showSuccess("Usuario registrado con éxito");
-  }
-
-  // Captura asistencia
-  function captureAttendance() {
-    if (!currentUser) return;
-    const now = new Date();
-    const fecha = now.toLocaleDateString();
-    const hora = now.toLocaleTimeString();
-    const entry = { user: currentUser, role: userRole, fecha, hora };
-    attendanceData.push(entry);
-    localStorage.setItem("attendance", JSON.stringify(attendanceData));
-    agregarFilaAsistencia(entry);
-    flashCapture();
-  }
-
-  // Cargar asistencia
-  function cargarAsistencia() {
-    attendanceData = JSON.parse(localStorage.getItem("attendance")) || [];
-    // Tabla usuario
-    attendanceTable.innerHTML = "";
-    attendanceData.forEach(entry => {
-      if (entry.user === currentUser) {
-        agregarFilaAsistencia(entry);
-      }
-    });
-
-    // Tabla admin
-    if (userRole === "admin") {
-      adminAttendanceTable.innerHTML = "";
-      attendanceData.forEach(entry => {
-        agregarFilaAdmin(entry);
-      });
-    }
-  }
-
-  // Agregar fila tabla usuario
-  function agregarFilaAsistencia(entry) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${entry.user}</td><td>${entry.fecha}</td><td>${entry.hora}</td>`;
-    attendanceTable.appendChild(tr);
-  }
-
-  // Agregar fila tabla admin con botón eliminar
-  function agregarFilaAdmin(entry) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${entry.user}</td>
-      <td>${entry.role}</td>
-      <td>${entry.fecha}</td>
-      <td>${entry.hora}</td>
-      <td><button class="delete-btn" aria-label="Eliminar registro de ${entry.user} del ${entry.fecha} a las ${entry.hora}">Eliminar</button></td>
-    `;
-    const btnDelete = tr.querySelector(".delete-btn");
-    btnDelete.addEventListener("click", () => {
-      eliminarAsistencia(entry);
-    });
-    adminAttendanceTable.appendChild(tr);
-  }
-
-  // Eliminar asistencia (solo admin)
-  function eliminarAsistencia(entry) {
-    if (userRole !== "admin") return;
-    attendanceData = attendanceData.filter(e =>
-      !(e.user === entry.user && e.fecha === entry.fecha && e.hora === entry.hora)
-    );
-    localStorage.setItem("attendance", JSON.stringify(attendanceData));
-    cargarAsistencia();
-    showSuccess("Registro eliminado");
-  }
-
-  // Flash efecto captura
-  function flashCapture() {
-    video.classList.add("flash");
-    setTimeout(() => video.classList.remove("flash"), 200);
-  }
-
-  // Descargar Excel
-  function descargarExcel() {
-    if (attendanceData.length === 0) {
-      showError("No hay datos para exportar");
-      return;
-    }
-    const ws_data = [
-      ["Usuario", "Rol", "Fecha", "Hora"],
-      ...attendanceData.map(({ user, role, fecha, hora }) => [user, role, fecha, hora]),
-    ];
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(ws_data);
-    XLSX.utils.book_append_sheet(wb, ws, "Asistencia");
-    XLSX.writeFile(wb, "asistencia.xlsx");
-  }
-
-  // Cámara
-  async function startCamera() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-      video.srcObject = stream;
-    } catch (error) {
-      showError("No se pudo acceder a la cámara");
-    }
-  }
-
-  // Cerrar sesión
-  function logout() {
-    currentUser = null;
-    userRole = null;
-    if (video.srcObject) {
-      video.srcObject.getTracks().forEach(track => track.stop());
-      video.srcObject = null;
-    }
-    container.style.display = "none";
-    adminPanel.style.display = "none";
-    loginForm.style.display = "block";
-    attendanceTable.innerHTML = "";
-    adminAttendanceTable.innerHTML = "";
-    mensaje.textContent = "";
-  }
-
-  // Event listeners
-  $("login-button").addEventListener("click", () => {
-    const user = $("username").value.trim();
-    const pass = $("password").value.trim();
-    login(user, pass);
-  });
-
-  $("register-button").addEventListener("click", () => {
-    const user = $("username").value.trim();
-    const pass = $("password").value.trim();
-    const role = $("role-select").value;
-    register(user, pass, role);
-  });
-
-  captureBtn.addEventListener("click", () => {
-    captureAttendance();
-  });
-
-  logoutBtn.addEventListener("click", logout);
-
-  downloadExcelBtn.addEventListener("click", descargarExcel);
-
-  // Funciones de reconocimiento por voz (simplificado)
-
-  function voiceLogin() {
-    if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
-      showError("Reconocimiento de voz no soportado en este navegador");
-      return;
-    }
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = "es-ES";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    recognition.start();
-    showSuccess("Habla ahora tu usuario y contraseña separados por espacio");
-    recognition.onresult = (event) => {
-      const speech = event.results[0][0].transcript.toLowerCase().trim();
-      const parts = speech.split(" ");
-      if (parts.length >= 2) {
-        const user = parts[0];
-        const pass = parts[1];
-        login(user, pass);
-      } else {
-        showError("No se entendió usuario y contraseña");
-      }
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQFdu36zRwL8OpoX6883pOuDyqcakfurY",
+      authDomain: "asistencia-docentes-9de71.firebaseapp.com",
+      databaseURL: "https://asistencia-docentes-9de71-default-rtdb.firebaseio.com",
+      projectId: "asistencia-docentes-9de71",
+      storageBucket: "asistencia-docentes-9de71.appspot.com",
+      messagingSenderId: "933641363169",
+      appId: "1:933641363169:web:5001d5ad0a37a0e4e8e1a0",
+      measurementId: "G-HYF7KLQ5NZ"
     };
-    recognition.onerror = () => {
-      showError("Error en reconocimiento de voz");
-    };
-  }
 
-  function voiceRegister() {
-    if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
-      showError("Reconocimiento de voz no soportado en este navegador");
-      return;
-    }
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = "es-ES";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    recognition.start();
-    showSuccess("Habla ahora tu usuario, contraseña y rol separados por espacio (ejemplo: juan 123 admin)");
-    recognition.onresult = (event) => {
-      const speech = event.results[0][0].transcript.toLowerCase().trim();
-      const parts = speech.split(" ");
-      if (parts.length >= 3) {
-        const user = parts[0];
-        const pass = parts[1];
-        const role = parts[2];
-        if (role !== "admin" && role !== "usuario" && role !== "docente") {
-          showError("Rol inválido. Usa 'admin' o 'usuario'");
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const $ = id => document.getElementById(id);
+      const usersKey = "users";
+
+      let currentUser = "", userRole = "", stream = null;
+
+      const video = $("video");
+      const feedback = $("feedback");
+      const mensaje = $("mensaje");
+      const loader = $("loader");
+
+      let attendanceRecords = {};
+
+      const showError = msg => {
+        mensaje.textContent = `⚠️ ${msg}`;
+        mensaje.style.color = "red";
+      };
+      const showSuccess = msg => {
+        feedback.textContent = msg;
+        feedback.style.color = "green";
+        setTimeout(() => feedback.textContent = "", 3000);
+      };
+
+      const getUsers = () => JSON.parse(localStorage.getItem(usersKey)) || {};
+
+      const startCamera = async () => {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          video.srcObject = stream;
+        } catch {
+          showError("No se pudo acceder a la cámara.");
+        }
+      };
+
+      const stopCamera = () => stream?.getTracks().forEach(track => track.stop());
+
+      const login = (user, pass) => {
+        const users = getUsers();
+        if (users[user]?.password === pass) {
+          currentUser = user;
+          userRole = users[user].role;
+          $("login-form").style.display = "none";
+          document.querySelector(".container").style.display = "block";
+          $("admin-panel").style.display = userRole === "admin" ? "block" : "none";
+          startCamera();
+          cargarAsistencia();
+          mensaje.textContent = "";
+        } else {
+          showError("Credenciales incorrectas");
+        }
+      };
+
+      const register = (user, pass, role) => {
+        if (!user || !pass) {
+          showError("Usuario y contraseña requeridos");
           return;
         }
-        register(user, pass, role === "docente" ? "Usuario" : role);
-      } else {
-        showError("No se entendió usuario, contraseña y rol");
-      }
-    };
-    recognition.onerror = () => {
-      showError("Error en reconocimiento de voz");
-    };
-  }
+        const users = getUsers();
+        if (users[user]) {
+          showError("Usuario ya existe");
+          return;
+        }
+        users[user] = { password: pass, role };
+        localStorage.setItem(usersKey, JSON.stringify(users));
+        showSuccess("Usuario registrado con éxito");
+      };
 
-  $("voice-login").addEventListener("click", voiceLogin);
-  $("voice-register").addEventListener("click", voiceRegister);
+      const hoyFecha = () => new Date().toISOString().slice(0, 10);
 
-});
-</script>
+      const cargarAsistencia = () => {
+        const attendanceRef = ref(db, "asistencias");
+        onValue(attendanceRef, (snapshot) => {
+          attendanceRecords = {};
+          const data = snapshot.val() || {};
+          $("attendance-table").querySelector("tbody").innerHTML = "";
+          $("admin-attendance").querySelector("tbody").innerHTML = "";
+
+          Object.entries(data).forEach(([key, { user, role, date, time }]) => {
+            if (date === hoyFecha()) {
+              // Solo mostrar asistencia del día
+              const tr = document.createElement("tr");
+              tr.innerHTML = `<td>${user}</td><td>${date}</td><td>${time}</td>`;
+              $("attendance-table").querySelector("tbody").appendChild(tr);
+
+              if (userRole === "admin") {
+                const adminTr = document.createElement("tr");
+                adminTr.innerHTML = `
+                  <td>${user}</td>
+                  <td>${role}</td>
+                  <td>${date}</td>
+                  <td>${time}</td>
+                  <td><button class="delete-btn" data-key="${key}">Eliminar</button></td>
+                `;
+                $("admin-attendance").querySelector("tbody").appendChild(adminTr);
+              }
+              attendanceRecords[user] = true;
+            }
+          });
+
+          // Attach delete handlers if admin
+          if (userRole === "admin") {
+            document.querySelectorAll(".delete-btn").forEach(btn => {
+              btn.onclick = () => {
+                if (confirm("¿Eliminar este registro?")) {
+                  remove(ref(db, `asistencias/${btn.dataset.key}`));
+                }
+              };
+            });
+          }
+        });
+      };
+
+      $("login-button").onclick = () => {
+        login($("username").value.trim(), $("password").value.trim());
+      };
+
+      $("register-button").onclick = () => {
+        register($("username").value.trim(), $("password").value.trim(), $("role-select").value);
+      };
+
+      $("logout-button").onclick = () => {
+        stopCamera();
+        currentUser = "";
+        userRole = "";
+        $("login-form").style.display = "block";
+        document.querySelector(".container").style.display = "none";
+        mensaje.textContent = "";
+        feedback.textContent = "";
+      };
+
+      $("capture").onclick = async () => {
+        if (!currentUser) {
+          showError("Debe iniciar sesión primero");
+          return;
+        }
+        if (attendanceRecords[currentUser]) {
+          showError("Asistencia ya registrada hoy");
+          return;
+        }
+
+        loader.style.display = "block";
+
+        // Capturar imagen (si quieres puedes hacer algo con la imagen)
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.scale(-1, 1); // espejo horizontal
+        ctx.drawImage(video, 0, 0, -canvas.width, canvas.height);
+        const fotoDataUrl = canvas.toDataURL("image/jpeg");
+
+        const now = new Date();
+        const date = hoyFecha();
+        const time = now.toTimeString().slice(0, 8);
+
+        // Guardar en Firebase
+        try {
+          const attendanceRef = ref(db, "asistencias");
+          await push(attendanceRef, { user: currentUser, role: userRole, date, time, photo: fotoDataUrl });
+          showSuccess("Asistencia registrada con éxito");
+          attendanceRecords[currentUser] = true;
+        } catch {
+          showError("Error al registrar asistencia");
+        } finally {
+          loader.style.display = "none";
+        }
+      };
+
+      $("download-excel").onclick = () => {
+        const table = $("admin-attendance");
+        const wb = XLSX.utils.table_to_book(table, { sheet: "Asistencia" });
+        XLSX.writeFile(wb, "asistencia.xlsx");
+      };
+
+      // Función para reconocimiento por voz (opcional, por si quieres activar)
+      // Puedes añadir más adelante si quieres
+
+    });
+  </script>
 </body>
 </html>
 
