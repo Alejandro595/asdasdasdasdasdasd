@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Asistencia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mjs"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rojo-principal: #d32f2f;
+      --rojo-oscuro: #b71c1c;
+      --blanco: #ffffff;
+      --gris-claro: #f5f5f5;
+      --negro: #000000;
+      --fuente: 'Roboto', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--fuente);
+      background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
+        url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Escudo_de_la_Universidad_Libre_de_Colombia.svg/2048px-Escudo_de_la_Universidad_Libre_de_Colombia.svg.png")
+        no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      color: var(--blanco);
+    }
+
+    .container, #login-form {
+      background-color: var(--blanco);
+      color: var(--negro);
+      margin: 40px auto;
+      padding: 30px;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    h2, h3 {
+      color: var(--rojo-principal);
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: var(--rojo-principal);
+      color: var(--blanco);
+      border: none;
+      border-radius: 6px;
+      padding: 12px 20px;
+      font-size: 16px;
+      margin-top: 12px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--negro);
+      transform: scale(1.05);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .video-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 480px;
+      height: 300px;
+      margin: 20px auto;
+      background: black;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: var(--gris-claro);
+      color: var(--negro);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: var(--rojo-principal);
+      color: var(--blanco);
+    }
+
+    .admin-container {
+      display: none;
+    }
+
+    #loader {
+      margin-top: 15px;
+      font-weight: bold;
+      color: green;
+      display: none;
+    }
+
+    .flash {
+      animation: flash 0.3s ease-in-out;
+    }
+
+    @keyframes flash {
+      from { background-color: var(--rojo-principal); }
+      to { background-color: var(--negro); }
+    }
+
+    .delete-btn {
+      background-color: var(--rojo-oscuro);
+      color: var(--blanco);
+      border: none;
+      border-radius: 5px;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: var(--negro);
+    }
+
+    @media (max-width: 600px) {
+      .container, #login-form {
+        padding: 20px;
+        margin: 20px;
+      }
+
+      .video-container {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="login-form" role="form" aria-labelledby="login-heading">
+    <h2 id="login-heading">🎓 Registro de Asistencia</h2>
+    <label for="username">Usuario</label>
+    <input type="text" id="username" placeholder="Usuario" aria-required="true">
+    <label for="password">Contraseña</label>
+    <input type="password" id="password" placeholder="Contraseña" aria-required="true">
+    <label for="role-select">Rol</label>
+    <select id="role-select">
+      <option value="Usuario">Docente</option>
+      <option value="admin">Administrador</option>
+    </select>
+    <button id="login-button">🔓 Iniciar sesión</button>
+    <button id="register-button">📝 Registrarse</button>
+    <button id="voice-login">🎤 Iniciar con voz</button>
+    <button id="voice-register">🎤 Registrar con voz</button>
+    <p id="mensaje" aria-live="polite"></p>
+    <p id="feedback" aria-live="polite"></p>
+  </div>
+
+  <div class="container" style="display:none;">
+    <h2>Bienvenido</h2>
+    <div class="video-container">
+      <video id="video" autoplay></video>
+    </div>
+    <button id="capture">✅ Registrar Asistencia</button>
+    <p id="loader">Registrando asistencia...</p>
+    <button id="logout-button">⏏️ Cerrar sesión</button>
+
+    <h3>📊 Asistencia registrada</h3>
+    <table id="attendance-table" aria-label="Tabla de asistencias">
+      <thead>
+        <tr><th>Usuario</th><th>Fecha</th><th>Hora</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div id="admin-panel" class="admin-container">
+      <h3>🛠 Panel de Administrador</h3>
+      <button id="download-excel">📥 Descargar Excel</button>
+      <table id="admin-attendance" aria-label="Panel de administrador">
+        <thead>
+          <tr><th>Usuario</th><th>Rol</th><th>Fecha</th><th>Hora</th><th>Acción</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="container" id="design-thinking-info" style="display:none;">
+    <h2>💡 Metodología Design Thinking Aplicada</h2>
+    <ol style="text-align:left;">
+      <li><strong>Empatizar:</strong> Se observó y entrevistó a docentes y estudiantes para entender los problemas del control de asistencia manual.</li>
+      <li><strong>Definir:</strong> Se identificó la necesidad de un sistema moderno y automatizado, sin contacto físico.</li>
+      <li><strong>Idear:</strong> Se exploraron varias soluciones, eligiendo reconocimiento facial por su eficacia.</li>
+      <li><strong>Prototipar:</strong> Se diseñó un prototipo en Figma con interfaz intuitiva.</li>
+      <li><strong>Evaluar:</strong> Se realizaron pruebas y se ajustó según la retroalimentación del usuario.</li>
+    </ol>
+    <p>🔗 Este sistema refleja innovación, accesibilidad, eficiencia y seguridad de datos.</p>
+  </div>
+</body>
+</html>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
