@@ -11,144 +11,180 @@
   <title>Registro de Asistencia</title>
   <script type="module" src="https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mjs"></script>
   <style>
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  background:
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(204, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
-    url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Escudo_de_la_Universidad_Libre_de_Colombia.svg/2048px-Escudo_de_la_Universidad_Libre_de_Colombia.svg.png")
-    no-repeat center center fixed;
-  background-size: cover;
-  color: #fff;
-  margin: 0;
-  padding: 0;
-}
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(204, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+        url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Escudo_de_la_Universidad_Libre_de_Colombia.svg/2048px-Escudo_de_la_Universidad_Libre_de_Colombia.svg.png")
+        no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
 
-.container, #login-form {
-  margin: 60px auto;
-  padding: 30px;
-  background: #ffffffee;
-  width: 90%;
-  max-width: 600px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  color: #222;
-}
+    .container, #login-form {
+      margin: 60px auto;
+      padding: 30px;
+      background: #ffffffee;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      color: #222;
+    }
 
-h2, h3 {
-  color: #c62828;
-  margin-bottom: 20px;
-  font-weight: bold;
-}
+    h2, h3 {
+      color: #c62828;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
 
-button {
-  margin-top: 20px;
-  padding: 14px 28px;
-  border: none;
-  background: #c62828;
-  color: white;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
+    button {
+      margin-top: 20px;
+      padding: 14px 28px;
+      border: none;
+      background: #c62828;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
 
-button:hover {
-  background: #000000;
-  transform: scale(1.05);
-}
+    button:hover {
+      background: #000000;
+      transform: scale(1.05);
+    }
 
-input, select {
-  width: 95%;
-  padding: 12px;
-  margin-top: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-}
+    input, select {
+      width: 95%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
 
-.video-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 340px;
-  height: 240px;
-  margin: 25px auto;
-  background: black;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
+    .video-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 340px;
+      height: 240px;
+      margin: 25px auto;
+      background: black;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
 
-#video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scaleX(-1);
-}
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 30px;
-  background: #f9f9f9;
-  color: #333;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      background: #f9f9f9;
+      color: #333;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 12px;
-  text-align: center;
-}
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
 
-th {
-  background: #c62828;
-  color: white;
-}
+    th {
+      background: #c62828;
+      color: white;
+    }
 
-.admin-container {
-  display: none;
-}
+    .admin-container {
+      display: none;
+    }
 
-#loader {
-  font-weight: bold;
-  margin-top: 20px;
-  color: #2e7d32;
-  display: none;
-}
+    #loader {
+      font-weight: bold;
+      margin-top: 20px;
+      color: #2e7d32;
+      display: none;
+    }
 
-.flash {
-  animation: flash 0.3s ease-in-out;
-}
+    .flash {
+      animation: flash 0.3s ease-in-out;
+    }
 
-@keyframes flash {
-  0% { background-color: #c62828; }
-  100% { background-color: #000; }
-}
+    @keyframes flash {
+      0% { background-color: #c62828; }
+      100% { background-color: #000; }
+    }
 
-.delete-btn {
-  background-color: #e53935;
-  border: none;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+    .delete-btn {
+      background-color: #e53935;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
 
-.delete-btn:hover {
-  background-color: #b71c1c;
-}
+    .delete-btn:hover {
+      background-color: #b71c1c;
+    }
 
+    #message-popup {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 20px;
+      background-color: rgba(255, 0, 0, 0.8);
+      color: white;
+      border-radius: 8px;
+      font-size: 16px;
+      display: none;
+      z-index: 9999;
+    }
+
+    /* Breadcrumb style */
+    nav#breadcrumb {
+      margin: 15px auto;
+      width: 90%;
+      max-width: 600px;
+      font-size: 14px;
+      color: white;
+      text-align: left;
+      user-select: none;
+    }
+    nav#breadcrumb span {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    nav#breadcrumb span.current {
+      text-decoration: none;
+      cursor: default;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
+  <!-- Breadcrumb -->
+  <nav id="breadcrumb"></nav>
+
   <div id="login-form">
     <h2>🎓 Registro de Asistencia</h2>
     <input type="text" id="username" placeholder="Usuario" />
@@ -166,7 +202,7 @@ th {
   </div>
 
   <div class="container" style="display:none;">
-    <h2>Bienvenido</h2>
+    <h2 id="welcome-title">Bienvenido</h2>
     <div class="video-container"><video id="video" autoplay></video></div>
     <button id="capture">✅ Registrar Asistencia</button>
     <p id="loader">Registrando asistencia...</p>
@@ -217,9 +253,67 @@ th {
       const feedback = $("feedback");
       const mensaje = $("mensaje");
       const loader = $("loader");
+      const breadcrumb = $("breadcrumb");
+      const welcomeTitle = $("welcome-title");
 
       let attendanceRecords = {};
 
+      // BREADCRUMB MANAGEMENT
+      // Estados para breadcrumb y vistas
+      let currentPage = "inicio"; // 'inicio', 'login', 'register', 'panel'
+      // Actualizar breadcrumb
+      function updateBreadcrumb(path) {
+        // path: array de strings o [{name, action?}]
+        breadcrumb.innerHTML = "";
+        path.forEach((item, i) => {
+          let span = document.createElement("span");
+          let name = typeof item === "string" ? item : item.name;
+          span.textContent = name;
+          if(i === path.length - 1) {
+            span.classList.add("current");
+          } else {
+            if(typeof item !== "string" && item.action) {
+              span.style.cursor = "pointer";
+              span.style.textDecoration = "underline";
+              span.onclick = item.action;
+            }
+          }
+          breadcrumb.appendChild(span);
+          if(i < path.length - 1) {
+            breadcrumb.appendChild(document.createTextNode(" > "));
+          }
+        });
+      }
+
+      // Funciones para mostrar vistas según la jerarquía
+      function showInicio() {
+        currentPage = "inicio";
+        $("login-form").style.display = "block";
+        document.querySelector(".container").style.display = "none";
+        mensaje.textContent = "";
+        feedback.textContent = "";
+        updateBreadcrumb([
+          {name: "Registro Docente", action: showInicio},
+          "Inicio",
+          "Iniciar sesión o Registro"
+        ]);
+      }
+
+      function showPanel() {
+        currentPage = "panel";
+        $("login-form").style.display = "none";
+        document.querySelector(".container").style.display = "block";
+        $("admin-panel").style.display = userRole === "admin" ? "block" : "none";
+        // Cambiar título según rol
+        welcomeTitle.textContent = userRole === "admin" ? "Panel de Administrador" : "Panel de Docente";
+        updateBreadcrumb([
+          {name: "Registro Docente", action: showInicio},
+          "Inicio",
+          userRole === "admin" ? "Panel de Administrador" : "Panel de Docente"
+        ]);
+      }
+
+      // Mostrar mensajes de error y éxito
       const showError = msg => {
         mensaje.textContent = `⚠️ ${msg}`;
         mensaje.style.color = "red";
@@ -230,8 +324,10 @@ th {
         setTimeout(() => feedback.textContent = "", 3000);
       };
 
+      // Obtener usuarios de localStorage
       const getUsers = () => JSON.parse(localStorage.getItem(usersKey)) || {};
 
+      // Cámara
       const startCamera = async () => {
         try {
           stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -240,25 +336,22 @@ th {
           showError("No se pudo acceder a la cámara.");
         }
       };
-
       const stopCamera = () => stream?.getTracks().forEach(track => track.stop());
 
+      // Funciones login y registro
       const login = (user, pass) => {
         const users = getUsers();
         if (users[user]?.password === pass) {
           currentUser = user;
           userRole = users[user].role;
-          $("login-form").style.display = "none";
-          document.querySelector(".container").style.display = "block";
-          $("admin-panel").style.display = userRole === "admin" ? "block" : "none";
+          mensaje.textContent = "";
+          showPanel();
           startCamera();
           cargarAsistencia();
-          mensaje.textContent = "";
         } else {
           showError("Credenciales incorrectas");
         }
       };
-
       const register = (user, pass, role) => {
         if (!user || !pass) {
           showError("Usuario y contraseña requeridos");
@@ -276,6 +369,7 @@ th {
 
       const hoyFecha = () => new Date().toISOString().slice(0, 10);
 
+      // Cargar asistencia
       const cargarAsistencia = () => {
         const attendanceRef = ref(db, "asistencias");
         onValue(attendanceRef, (snapshot) => {
@@ -309,9 +403,10 @@ th {
           // Attach delete handlers if admin
           if (userRole === "admin") {
             document.querySelectorAll(".delete-btn").forEach(btn => {
-              btn.onclick = () => {
-                if (confirm("¿Eliminar este registro?")) {
-                  remove(ref(db, `asistencias/${btn.dataset.key}`));
+              btn.onclick = e => {
+                const key = e.target.dataset.key;
+                if (confirm("¿Eliminar registro de asistencia?")) {
+                  remove(ref(db, `asistencias/${key}`));
                 }
               };
             });
@@ -319,25 +414,8 @@ th {
         });
       };
 
-      $("login-button").onclick = () => {
-        login($("username").value.trim(), $("password").value.trim());
-      };
-
-      $("register-button").onclick = () => {
-        register($("username").value.trim(), $("password").value.trim(), $("role-select").value);
-      };
-
-      $("logout-button").onclick = () => {
-        stopCamera();
-        currentUser = "";
-        userRole = "";
-        $("login-form").style.display = "block";
-        document.querySelector(".container").style.display = "none";
-        mensaje.textContent = "";
-        feedback.textContent = "";
-      };
-
-      $("capture").onclick = async () => {
+      // Registrar asistencia
+      const registrarAsistencia = async () => {
         if (!currentUser) {
           showError("Debe iniciar sesión primero");
           return;
@@ -346,44 +424,133 @@ th {
           showError("Asistencia ya registrada hoy");
           return;
         }
-
         loader.style.display = "block";
 
-        // Capturar imagen (si quieres puedes hacer algo con la imagen)
+        // Captura foto de video (opcional)
         const canvas = document.createElement("canvas");
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         const ctx = canvas.getContext("2d");
-        ctx.scale(-1, 1); // espejo horizontal
-        ctx.drawImage(video, 0, 0, -canvas.width, canvas.height);
-        const fotoDataUrl = canvas.toDataURL("image/jpeg");
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, 0, 0);
 
+        // Guardar asistencia en Firebase
         const now = new Date();
-        const date = hoyFecha();
+        const date = now.toISOString().slice(0, 10);
         const time = now.toTimeString().slice(0, 8);
-
-        // Guardar en Firebase
         try {
-          const attendanceRef = ref(db, "asistencias");
-          await push(attendanceRef, { user: currentUser, role: userRole, date, time, photo: fotoDataUrl });
+          await push(ref(db, "asistencias"), {
+            user: currentUser,
+            role: userRole,
+            date,
+            time,
+          });
           showSuccess("Asistencia registrada con éxito");
           attendanceRecords[currentUser] = true;
         } catch {
           showError("Error al registrar asistencia");
-        } finally {
-          loader.style.display = "none";
         }
+        loader.style.display = "none";
       };
 
-      $("download-excel").onclick = () => {
-        const table = $("admin-attendance");
-        const wb = XLSX.utils.table_to_book(table, { sheet: "Asistencia" });
+      // Descargar Excel
+      const downloadExcel = () => {
+        const ws = XLSX.utils.table_to_sheet($("admin-attendance"));
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Asistencia");
         XLSX.writeFile(wb, "asistencia.xlsx");
       };
 
-      // Función para reconocimiento por voz (opcional, por si quieres activar)
-      // Puedes añadir más adelante si quieres
+      // Cerrar sesión
+      const logout = () => {
+        currentUser = "";
+        userRole = "";
+        attendanceRecords = {};
+        stopCamera();
+        showInicio();
+      };
 
+      // VINCULAR BOTONES
+      $("login-button").onclick = () => {
+        login($("username").value.trim(), $("password").value.trim());
+      };
+      $("register-button").onclick = () => {
+        register($("username").value.trim(), $("password").value.trim(), $("role-select").value);
+      };
+      $("capture").onclick = registrarAsistencia;
+      $("download-excel").onclick = downloadExcel;
+      $("logout-button").onclick = logout;
+
+      // FUNCIONALIDAD DE VOZ
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        console.warn("SpeechRecognition no soportado en este navegador");
+      } else {
+        const recognition = new SpeechRecognition();
+        recognition.lang = "es-ES";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        const voiceLogin = () => {
+          mensaje.textContent = "🎤 Escuchando usuario para inicio...";
+          recognition.start();
+
+          recognition.onresult = (event) => {
+            const speechResult = event.results[0][0].transcript.toLowerCase();
+            mensaje.textContent = `Resultado: "${speechResult}"`;
+
+            // Intentar dividir en usuario y contraseña (usuario contraseña)
+            const parts = speechResult.split(" ");
+            if (parts.length >= 2) {
+              const user = parts[0];
+              const pass = parts.slice(1).join("");
+              login(user, pass);
+            } else {
+              showError("Por favor, diga usuario y contraseña separados");
+            }
+          };
+
+          recognition.onerror = (event) => {
+            showError("Error reconocimiento voz: " + event.error);
+          };
+        };
+
+        const voiceRegister = () => {
+          mensaje.textContent = "🎤 Escuchando usuario para registro...";
+          recognition.start();
+
+          recognition.onresult = (event) => {
+            const speechResult = event.results[0][0].transcript.toLowerCase();
+            mensaje.textContent = `Resultado: "${speechResult}"`;
+
+            // Formato esperado: usuario contraseña rol (ej: juan 1234 usuario)
+            const parts = speechResult.split(" ");
+            if (parts.length >= 3) {
+              const user = parts[0];
+              const pass = parts[1];
+              const roleSpoken = parts.slice(2).join("");
+              let role = "Usuario";
+              if (roleSpoken.includes("admin") || roleSpoken.includes("administrador")) {
+                role = "admin";
+              }
+              register(user, pass, role);
+            } else {
+              showError("Por favor diga usuario, contraseña y rol (usuario o administrador)");
+            }
+          };
+
+          recognition.onerror = (event) => {
+            showError("Error reconocimiento voz: " + event.error);
+          };
+        };
+
+        $("voice-login").onclick = voiceLogin;
+        $("voice-register").onclick = voiceRegister;
+      }
+
+      // Mostrar inicio al cargar la página
+      showInicio();
     });
   </script>
 </body>
